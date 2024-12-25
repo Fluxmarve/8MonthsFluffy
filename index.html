@@ -337,9 +337,355 @@
         document.body.appendChild(square);
         setTimeout(() => square.remove(), 6000);
     }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #f3c7f7, #9c4d95);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            background-size: cover;
+        }
+
+        /* Background Glow */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #f8a7d2, #ffb0d4, #ffb0d4, #f8a7d2);
+            background-size: 150% 150%;
+            z-index: -1;
+            animation: candyGlow 5s linear infinite;
+        }
+
+        @keyframes candyGlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Hearts in Corners */
+        .corner-heart {
+            position: absolute;
+            font-size: 1.8em;
+            opacity: 0.6;
+            animation: pump 2s infinite alternate ease-in-out;
+        }
+
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
+
+        @keyframes pump {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.3); }
+        }
+
+        /* Header Styles */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: #fce4ec;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sliding Words (I Love You) */
+        .word {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUp 1s forwards;
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            color: #ff3b3f;
+            text-shadow: 2px 2px 3px #9c27b0; /* Purple outline */
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Heart Button */
+        .heart-button {
+            background-color: #ff4c9e;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.5em;
+            font-family: 'Dancing Script', cursive;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .heart-button:before {
+            content: "";
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            background-size: 600%;
+            z-index: -1;
+            filter: blur(12px);
+            width: calc(100% + 12px);
+            height: calc(100% + 12px);
+            animation: glowing-button-85 20s linear infinite;
+            border-radius: 50px;
+        }
+
+        @keyframes glowing-button-85 {
+            0% { background-position: 0 0; }
+            50% { background-position: 600% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .heart-button:active {
+            transform: scale(0.9);
+        }
+
+        /* Letter Container */
+        .letter-container {
+            display: none;
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 750px;
+            margin: 20px auto;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            font-size: 1.3em;
+            color: #4a4a4a;
+            text-align: left;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInLetter 5s ease-in-out forwards;
+            max-height: 55vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeInLetter {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Close Button */
+        .close-button {
+            background: #f16c96;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: #ec5782;
+            transform: scale(1.1);
+        }
+
+        /* Snowfall Effect */
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .square {
+            position: absolute;
+            top: -10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+            animation: fall linear infinite;
+            z-index: 2;
+            border-radius: 2px;
+        }
+
+        /* Read for You Button */
+        #readForYouButton {
+            display: none;
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-family: 'Dancing Script', cursive;
+            background-color: #ff4c9e;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffb0d4, 0 0 20px #ff4c9e;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        #readForYouButton:hover {
+            background-color: #ff99c9;
+            box-shadow: 0 0 25px rgba(255, 105, 180, 1);
+            transform: scale(1.1);
+        }
+
+        /* Unmute Button */
+        #unmuteButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff4c9e;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        #unmuteButton:hover {
+            background-color: #ec5782;
+        }
+    </style>
+</head>
+<body>
+    <div class="corner-heart top-left">💘</div>
+    <div class="corner-heart top-right">❤️</div>
+    <div class="corner-heart bottom-left">💖</div>
+    <div class="corner-heart bottom-right">💗</div>
+    <div class="content">
+        <h1 id="mainHeading">For My Love <span class="heart-after">💝</span></h1>
+        <button class="heart-button" id="openLetterButton">Click to Read My Heartfelt Letter</button>
+        <div id="wordContainer"></div>
+        <div class="letter-container" id="letterContainer">
+            <button class="close-button" id="closeButton">Close</button>
+             <p>My Love 💖 My world 💝</p>
+            <p>As our 8th month to be together approaches, I can’t help but reflect on everything we’ve been through in this short time. This past month has been filled with moments of joy! Yes, I agree we have been through alot of fights and challanges too. We’ve fought more than I imagined we would, but with each fight, I’ve only become more attached to you. It’s crazy how someone I barely knew a few months ago has now become the most important person in my life. 🥹🤍</p>
+            <p>I never thought I could feel this way, but now, thinking about a life without you feels impossible. Honestly, the thought of losing you is so overwhelming that just imagining it makes my heart ache and brings tears to my eyes, and I mean it. I love you—more than I can put into words. When I say "I love you," I mean YOU and only Y.O.U. Everything about you, everything we’ve shared, every little thing you do. You are my favorite person, my heart, my everything.🌹🥰</p>
+            <p>I know we’re not perfect. There are moments when I feel unsure or distant, but in reality, what’s happening is that I’ve fallen so much deeper in love with you than I ever thought possible. A stranger, someone I didn’t know just a couple of months ago, has become the person I fear losing the most. You’re my world now, and the thought of even losing a piece of you scares me beyond words. Yes, it's true I don't know why, but I feel like I have been attached to you more than ever in the last few days.</p>
+            <p>Thank you for loving me through the good and the bad, for being there even when things get tough. You’ve shown me what real love is, and I am so incredibly grateful. No matter what happens, know that I’ll always be here, fighting for us, because you mean everything to me, I hope our dreams will come true one day 💖.</p>
+            <p>I can’t wait for the future we’ll share, for all the memories we still have to make. I love you more than I could ever express, and I’m so thankful to have you by my side 🤗 because of you i feel like i have a chance, a new life! Thank you for your support 🙏 🙌 ❤️ I love you MWA MWA 🥰😘 Happy 8th monthsary!</p>
+            <p>Forever Yours 🤭</p>
+            <p>Hamid ☺️</p>
+            <!-- Letter Content -->
+        </div>
+    </div>
+    <!-- Audio -->
+    <audio id="backgroundMusic" autoplay loop muted>
+        <source src="Piano123.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <button id="unmuteButton">Unmute</button>
+    <button id="readForYouButton">Husband Read<br>For You</button>
+    <audio id="kokoAudio">
+        <source src="Koko.m4a" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+    const openLetterButton = document.getElementById('openLetterButton');
+    const letterContainer = document.getElementById('letterContainer');
+    const closeButton = document.getElementById('closeButton');
+    const unmuteButton = document.getElementById('unmuteButton');
+    const readForYouButton = document.getElementById('readForYouButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const kokoAudio = document.getElementById('kokoAudio');
+    const wordContainer = document.getElementById('wordContainer');
+    const mainHeading = document.getElementById('mainHeading');
+    const words = ["I", "Love", "You 🥰"];
+    let clickCount = 0;
+    let timer = null;
+
+    // Set background music volume
+    backgroundMusic.volume = 0.5; // Adjust volume between 0.0 and 1.0
+
+    openLetterButton.addEventListener('click', () => {
+        clickCount++;
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => { clickCount = 0; }, 25000);
+        if (clickCount <= 3) {
+            const word = document.createElement('div');
+            word.classList.add('word');
+            word.textContent = words[clickCount - 1];
+            wordContainer.appendChild(word);
+        }
+        if (clickCount === 3) {
+            letterContainer.style.display = 'block';
+            openLetterButton.style.display = 'none';
+            mainHeading.style.display = 'none';
+            readForYouButton.style.display = 'block';
+            clickCount = 0;
+        }
+    });
+
+    closeButton.addEventListener('click', () => {
+        letterContainer.style.display = 'none';
+        wordContainer.innerHTML = '';
+        openLetterButton.style.display = 'block';
+        mainHeading.style.display = 'block';
+        readForYouButton.style.display = 'none';
+    });
+
+    unmuteButton.addEventListener('click', () => {
+        backgroundMusic.muted = false;
+        backgroundMusic.play();
+        unmuteButton.style.display = 'none';
+    });
+
+    readForYouButton.addEventListener('click', () => {
+        kokoAudio.play();
+        readForYouButton.style.display = 'none';
+    });
+
+    function createSnowfall() {
+        const square = document.createElement('div');
+        square.classList.add('square');
+        const size = Math.random() * 5 + 2;
+        square.style.width = `${size}px`;
+        square.style.height = `${size}px`;
+        square.style.left = `${Math.random() * 100}vw`;
+        square.style.animationDuration = `${Math.random() * 3 + 3}s`;
+        document.body.appendChild(square);
+        setTimeout(() => square.remove(), 6000);
+    }
 
     for (let i = 0; i < 20; i++) createSnowfall();
-    setInterval(createSnowfall, 40);
+    setInterval(createSnowfall, 100);
+</script>
+
+</body>
+</html>
+
+    for (let i = 0; i < 20; i++) createSnowfall();
+    setInterval(createSnowfall, 100);
 </script>
 
 </body>
