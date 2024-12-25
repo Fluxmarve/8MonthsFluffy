@@ -272,71 +272,75 @@
         Your browser does not support the audio element.
     </audio>
     <script>
-        const openLetterButton = document.getElementById('openLetterButton');
-        const letterContainer = document.getElementById('letterContainer');
-        const closeButton = document.getElementById('closeButton');
-        const unmuteButton = document.getElementById('unmuteButton');
-        const readForYouButton = document.getElementById('readForYouButton');
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        const kokoAudio = document.getElementById('kokoAudio');
-        const wordContainer = document.getElementById('wordContainer');
-        const mainHeading = document.getElementById('mainHeading');
-        const words = ["I", "Love", "You 🥰"];
-        let clickCount = 0;
-        let timer = null;
+    const openLetterButton = document.getElementById('openLetterButton');
+    const letterContainer = document.getElementById('letterContainer');
+    const closeButton = document.getElementById('closeButton');
+    const unmuteButton = document.getElementById('unmuteButton');
+    const readForYouButton = document.getElementById('readForYouButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const kokoAudio = document.getElementById('kokoAudio');
+    const wordContainer = document.getElementById('wordContainer');
+    const mainHeading = document.getElementById('mainHeading');
+    const words = ["I", "Love", "You 🥰"];
+    let clickCount = 0;
+    let timer = null;
 
-        openLetterButton.addEventListener('click', () => {
-            clickCount++;
-            if (timer) clearTimeout(timer);
-            timer = setTimeout(() => { clickCount = 0; }, 25000);
-            if (clickCount <= 3) {
-                const word = document.createElement('div');
-                word.classList.add('word');
-                word.textContent = words[clickCount - 1];
-                wordContainer.appendChild(word);
-            }
-            if (clickCount === 3) {
-                letterContainer.style.display = 'block';
-                openLetterButton.style.display = 'none';
-                mainHeading.style.display = 'none';
-                readForYouButton.style.display = 'block';
-                clickCount = 0;
-            }
-        });
+    // Set background music volume
+    backgroundMusic.volume = 0.5; // Adjust volume between 0.0 and 1.0
 
-        closeButton.addEventListener('click', () => {
-            letterContainer.style.display = 'none';
-            wordContainer.innerHTML = '';
-            openLetterButton.style.display = 'block';
-            mainHeading.style.display = 'block';
-            readForYouButton.style.display = 'none';
-        });
-
-        unmuteButton.addEventListener('click', () => {
-            backgroundMusic.muted = false;
-            backgroundMusic.play();
-            unmuteButton.style.display = 'none';
-        });
-
-        readForYouButton.addEventListener('click', () => {
-            kokoAudio.play();
-            readForYouButton.style.display = 'none';
-        });
-
-        function createSnowfall() {
-            const square = document.createElement('div');
-            square.classList.add('square');
-            const size = Math.random() * 5 + 2;
-            square.style.width = `${size}px`;
-            square.style.height = `${size}px`;
-            square.style.left = `${Math.random() * 100}vw`;
-            square.style.animationDuration = `${Math.random() * 3 + 3}s`;
-            document.body.appendChild(square);
-            setTimeout(() => square.remove(), 6000);
+    openLetterButton.addEventListener('click', () => {
+        clickCount++;
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => { clickCount = 0; }, 25000);
+        if (clickCount <= 3) {
+            const word = document.createElement('div');
+            word.classList.add('word');
+            word.textContent = words[clickCount - 1];
+            wordContainer.appendChild(word);
         }
+        if (clickCount === 3) {
+            letterContainer.style.display = 'block';
+            openLetterButton.style.display = 'none';
+            mainHeading.style.display = 'none';
+            readForYouButton.style.display = 'block';
+            clickCount = 0;
+        }
+    });
 
-        for (let i = 0; i < 20; i++) createSnowfall();
-        setInterval(createSnowfall, 40);
-    </script>
+    closeButton.addEventListener('click', () => {
+        letterContainer.style.display = 'none';
+        wordContainer.innerHTML = '';
+        openLetterButton.style.display = 'block';
+        mainHeading.style.display = 'block';
+        readForYouButton.style.display = 'none';
+    });
+
+    unmuteButton.addEventListener('click', () => {
+        backgroundMusic.muted = false;
+        backgroundMusic.play();
+        unmuteButton.style.display = 'none';
+    });
+
+    readForYouButton.addEventListener('click', () => {
+        kokoAudio.play();
+        readForYouButton.style.display = 'none';
+    });
+
+    function createSnowfall() {
+        const square = document.createElement('div');
+        square.classList.add('square');
+        const size = Math.random() * 5 + 2;
+        square.style.width = `${size}px`;
+        square.style.height = `${size}px`;
+        square.style.left = `${Math.random() * 100}vw`;
+        square.style.animationDuration = `${Math.random() * 3 + 3}s`;
+        document.body.appendChild(square);
+        setTimeout(() => square.remove(), 6000);
+    }
+
+    for (let i = 0; i < 20; i++) createSnowfall();
+    setInterval(createSnowfall, 40);
+</script>
+
 </body>
 </html>
