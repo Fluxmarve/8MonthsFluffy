@@ -174,6 +174,22 @@
             transform: scale(1.1);
         }
 
+        /* Snowfall Effect */
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .square {
+            position: absolute;
+            top: -10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+            animation: fall linear infinite;
+            z-index: 2;
+            border-radius: 2px;
+        }
+
         /* Read for You Button */
         #readForYouButton {
             display: none;
@@ -223,7 +239,6 @@
     </style>
 </head>
 <body>
-    <!-- Content -->
     <div class="corner-heart top-left">💘</div>
     <div class="corner-heart top-right">❤️</div>
     <div class="corner-heart bottom-left">💖</div>
@@ -242,10 +257,10 @@
             <p>I can’t wait for the future we’ll share, for all the memories we still have to make. I love you more than I could ever express, and I’m so thankful to have you by my side 🤗 because of you i feel like i have a chance, a new life! Thank you for your support 🙏 🙌 ❤️ I love you MWA MWA 🥰😘 Happy 8th monthsary!</p>
             <p>Forever Yours 🤭</p>
             <p>Hamid ☺️</p>
+            <!-- Letter Content -->
         </div>
     </div>
-
-    <!-- Audio Elements -->
+    <!-- Audio -->
     <audio id="backgroundMusic" autoplay loop muted>
         <source src="Piano123.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -256,13 +271,10 @@
         <source src="Koko.m4a" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
-    <!-- JavaScript -->
     <script>
         const openLetterButton = document.getElementById('openLetterButton');
         const letterContainer = document.getElementById('letterContainer');
         const closeButton = document.getElementById('closeButton');
-        const instruction = document.getElementById('instruction');
         const unmuteButton = document.getElementById('unmuteButton');
         const readForYouButton = document.getElementById('readForYouButton');
         const backgroundMusic = document.getElementById('backgroundMusic');
@@ -286,7 +298,7 @@
             if (clickCount === 3) {
                 letterContainer.style.display = 'block';
                 openLetterButton.style.display = 'none';
-                mainHeading.style.display = 'none'; // Hide heading
+                mainHeading.style.display = 'none';
                 readForYouButton.style.display = 'block';
                 clickCount = 0;
             }
@@ -296,7 +308,7 @@
             letterContainer.style.display = 'none';
             wordContainer.innerHTML = '';
             openLetterButton.style.display = 'block';
-            mainHeading.style.display = 'block'; // Show heading again
+            mainHeading.style.display = 'block';
             readForYouButton.style.display = 'none';
         });
 
@@ -310,6 +322,21 @@
             kokoAudio.play();
             readForYouButton.style.display = 'none';
         });
+
+        function createSnowfall() {
+            const square = document.createElement('div');
+            square.classList.add('square');
+            const size = Math.random() * 5 + 2;
+            square.style.width = `${size}px`;
+            square.style.height = `${size}px`;
+            square.style.left = `${Math.random() * 100}vw`;
+            square.style.animationDuration = `${Math.random() * 3 + 3}s`;
+            document.body.appendChild(square);
+            setTimeout(() => square.remove(), 6000);
+        }
+
+        for (let i = 0; i < 20; i++) createSnowfall();
+        setInterval(createSnowfall, 40);
     </script>
 </body>
 </html>
